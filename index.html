@@ -229,6 +229,47 @@
             color: #fff;
             text-decoration: underline;
         }
+
+        .popup-notification {
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 999;
+            display: none;
+            animation: fadeIn 1s;
+        }
+
+        .popup-notification button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .view-counter {
+            margin-top: 10px;
+            font-size: 1em;
+            color: #000000;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -413,6 +454,19 @@
                 <button type="submit">Download CV</button>
             </a>
         </div>
+        <div class="view-counter">
+            Profile views: <span id="profile-views">0</span>
+        </div>
+    </div>
+
+    <div id="popup1" class="popup-notification">
+        <p>Muttaki is currently looking for Internship opportunities as a Machine Learning Engineer, Software Engineer, Full Stack Web Developer, or Research based on NLP, DL, or Computer Vision.</p>
+        <button onclick="closePopup('popup1')">Close</button>
+    </div>
+
+    <div id="popup2" class="popup-notification">
+        <p>He does not and will not require H1B sponsorship. He is brown, Asian, not a protected veteran, and does not have any disabilities. Feel free to email him regarding job opportunities.</p>
+        <button onclick="closePopup('popup2')">Close</button>
     </div>
 
     <div class="bottom-left">
@@ -444,6 +498,28 @@
                 document.querySelectorAll('.nested-dropdown').forEach(d => d.style.display = 'none');
                 nestedDropdown.style.display = isVisible ? 'none' : 'block';
             }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const counterElement = document.getElementById('profile-views');
+            const count = localStorage.getItem('profileViews') || 0;
+            const newCount = parseInt(count, 10) + 1;
+            localStorage.setItem('profileViews', newCount);
+            counterElement.textContent = newCount;
+
+            // Show popups after a delay
+            setTimeout(() => {
+                document.getElementById('popup1').style.display = 'block';
+            }, 10000); // 10 seconds
+
+            setTimeout(() => {
+                document.getElementById('popup2').style.display = 'block';
+            }, 20000); // 20 seconds
+        });
+
+        // Close popup function
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
         }
     </script>
 </body>
