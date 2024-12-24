@@ -503,18 +503,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             const counterElement = document.getElementById('profile-views');
             const count = localStorage.getItem('profileViews') || 0;
-            const newCount = parseInt(count, 10) + 1;
+            const newCount = parseInt(count, 10) + 1 * 7;
             localStorage.setItem('profileViews', newCount);
             counterElement.textContent = newCount;
 
             // Show popups after a delay
             setTimeout(() => {
                 document.getElementById('popup1').style.display = 'block';
-            }, 10000); // 10 seconds
+            }, 15000); // 15 seconds
 
             setTimeout(() => {
                 document.getElementById('popup2').style.display = 'block';
-            }, 20000); // 20 seconds
+            }, 30000); // 30 seconds
         });
 
         // Close popup function
