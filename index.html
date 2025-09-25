@@ -1,701 +1,598 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muttaki I. Bismoy - Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap" rel="stylesheet">
-    <style>
-        /* General Styles */
-        body {
-            margin: 0;
-            font-family: 'Trebuchet MS', sans-serif;
-            height: 100vh;
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee, #fbc2eb, #ff9a9e);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            overflow: hidden;
-            color: #ffffff;
-            padding: 0 50px;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Muttaki I. Bismoy — Portfolio</title>
+  <meta name="description" content="Muttaki I. Bismoy — ML & Computer Vision engineer in UAV forestry, WiFi sensing (BFI/CSI), and embedded AI. PhD researcher, published author, and builder of deployable ML systems." />
+  <meta name="theme-color" content="#ffffff"/>
+  <link href="https://fonts.googleapis.com/css2?family=Trebuchet+MS&display=swap" rel="stylesheet"/>
 
-        body.dark-mode {
-            background: #121212;
-            color: #ffffff;
-        }
+  <style>
+    :root{
+      --fg:#0f172a;
+      --muted:#334155;
+      --card:rgba(15,23,42,0.06);
+      --card2:rgba(15,23,42,0.08);
+      --ring:rgba(79,70,229,.35);
+      --accent:#4f46e5;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Trebuchet MS',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      color:var(--fg);
+      background:linear-gradient(120deg,#fff,#f4f7ff,#fef6ff);
+      background-size:300% 300%;
+      min-height:100vh;
+      display:grid;
+      grid-template-columns: 9fr 1fr; /* 90% | 10% */
+      gap:18px;
+      padding:20px;
+    }
+    @media (max-width: 980px){
+      body{ grid-template-columns: 1fr; }
+    }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    /* Header (photo + name + role) pinned top-left */
+    .header{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:10px;
+    }
+    .profile-photo{
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid rgba(15,23,42,0.12);
+      box-shadow:0 6px 18px rgba(15,23,42,0.15);
+    }
+    .title-wrap .hero-name{font-weight:800;font-size:1.35rem;margin:0}
+    .title-wrap .hero-role{margin:2px 0 0;color:var(--muted)}
 
-        .left-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: flex-start;
-            margin-top: 50px;
-            max-height: calc(100vh - 100px);
-            overflow-y: auto;
-            padding-right: 10px;
-        }
+    /* Two columns: left content area + right icons */
+    .left{
+      min-width:0;
+      max-width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      padding-right:10px;
+    }
+    .right{
+      position:sticky;
+      top:20px;
+      height:fit-content;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:10px;
+    }
 
-        .left-section button {
-            font-size: 1.2em;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0);
-            color: #fff;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
+    /* Section toggles */
+    .section-btn{
+      text-align:left;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid transparent;
+      background:transparent;
+      color:var(--fg);
+      cursor:pointer;
+      transition:.18s ease;
+      font-size:1rem;
+    }
+    .section-btn:hover,.section-btn:focus-visible{
+      background:var(--card);
+      outline:none;
+      box-shadow:0 0 0 3px var(--ring);
+      transform:translateY(-1px);
+    }
+    .dropdown{
+      display:none;
+      background:var(--card);
+      padding:14px;
+      border-radius:14px;
+    }
+    .section-btn.active + .dropdown{display:block}
+    .nested-button{
+      display:block;width:100%;
+      margin:10px 0 6px;padding:8px 12px;border-radius:10px;border:1px solid transparent;
+      background:var(--card2);cursor:pointer;text-align:left
+    }
+    .nested-button:hover,.nested-button:focus-visible{
+      background:rgba(15,23,42,.12);
+      box-shadow:0 0 0 3px var(--ring);outline:none
+    }
+    .nested-dropdown{display:none;margin-top:8px;padding-left:12px;border-left:2px solid rgba(15,23,42,.2)}
+    .nested-button.active + .nested-dropdown{display:block}
 
-        .left-section button:hover {
-            background: rgba(255, 255, 255, 0.13);
-            transform: translateY(-3px);
-        }
+    .list-tight{margin:0;padding-left:18px}
+    .list-tight li{margin:6px 0}
 
-        .center-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            margin-top: 120px;
-            margin-left: 220px;
-        }
+    /* Projects grid */
+    .projects-grid{
+      display:grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+    @media (max-width:1200px){ .projects-grid{ grid-template-columns: repeat(2,minmax(0,1fr)); } }
+    @media (max-width:700px){ .projects-grid{ grid-template-columns: 1fr; } }
+    .project-box{
+      background:var(--card);
+      padding:12px;border-radius:12px;
+      transition:transform .2s ease, background .2s ease;
+    }
+    .project-box:hover{transform:translateY(-2px);background:rgba(15,23,42,0.12)}
+    .project-box img{width:100%;height:auto;border-radius:10px;margin-bottom:10px;object-fit:cover}
+    .project-box h3{font-size:1.02rem;margin:6px 0 8px}
+    .project-box p{font-size:.95rem;color:var(--muted);margin:0 0 10px}
+    .project-box a{display:inline-block;color:#111;text-decoration:underline;font-size:.95rem;margin-right:10px}
 
-        .center-section img {
-            width: 500px;
-            height: 600px;
-            border-radius: 50%;
-            border: 6px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
+    /* Social icons (right column) */
+    .icon-col{
+      display:flex;flex-direction:column;gap:8px;align-items:flex-end
+    }
+    .icon-col a{
+      display:inline-grid;place-items:center;width:40px;height:40px;border-radius:10px;
+      background:var(--card);transition:.15s ease
+    }
+    .icon-col a:hover,.icon-col a:focus-visible{
+      background:rgba(15,23,42,.12);transform:translateY(-1px);outline:none;box-shadow:0 0 0 3px var(--ring)
+    }
+    .icon-col img{width:22px;height:22px}
 
-        .right-section {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 15px;
-            margin-top: 50px;
-        }
+    /* Top utility widgets */
+    #dark-mode-toggle{
+      position:fixed;top:16px;right:16px;background:var(--card);
+      border:1px solid rgba(15,23,42,.15);border-radius:999px;padding:8px 10px;cursor:pointer
+    }
+    #dark-mode-toggle:hover,#dark-mode-toggle:focus-visible{
+      box-shadow:0 0 0 3px var(--ring);outline:none
+    }
+    #current-time{
+    position: static;
+    background: var(--card);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: .95rem;
+    align-self: flex-start;   /* keep it left within the .left column */
+    margin-top: 8px;          /* small gap above */
+    }
 
-        .right-section img {
-            width: 30px;
-            height: 30px;
-            margin: 10px;
-            transition: transform 0.3s ease;
-        }
+    #custom-cursor{
+      position:fixed;top:0;left:0;width:14px;height:14px;background:rgba(15,23,42,.7);
+      border-radius:50%;pointer-events:none;transform:translate(-50%,-50%)
+    }
+    @media (pointer:coarse){ #custom-cursor{display:none} }
 
-        .right-section a {
-            display: inline-block;
-        }
+    /* Loading */
+    #loading{
+      position:fixed;inset:0;display:grid;place-items:center;background:#fff;transition:opacity .45s
+    }
+    .spinner{width:40px;height:40px;border-radius:50%;border:4px solid rgba(15,23,42,.15);border-top-color:var(--accent);animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-        .right-section img:hover {
-            transform: scale(1.2);
-        }
+    /* Popups (neutral/professional) */
+    .popup-notification{
+      position:fixed;bottom:20px;right:20px;background:rgba(15,23,42,.92);color:#fff;
+      padding:14px;border-radius:12px;display:none;max-width:min(420px,90vw)
+    }
+    .popup-notification button{margin-top:10px;padding:6px 10px;border:none;border-radius:8px;background:#fff;color:#000;cursor:pointer}
 
-        .bottom-left {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            color: #ffffff;
-            font-size: 1.2em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-        }
-
-        .bottom-left p {
-            margin: 0;
-        }
-
-        .bottom-left p.name {
-            font-size: 1.8em;
-            font-weight: bold;
-        }
-
-        .bottom-left p.designation {
-            font-size: 1.2em;
-        }
-
-        .bottom-right {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            color: #000000;
-            font-size: 1em;
-            text-align: right;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-        }
-
-        .dropdown {
-            display: none;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 10px;
-        }
-
-        .left-section button.active + .dropdown {
-            display: block;
-        }
-
-        .dropdown .nested-dropdown {
-            display: none;
-            margin-top: 10px;
-            padding-left: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-left: 2px solid rgba(255, 255, 255, 0.4);
-        }
-
-        .nested-button.active + .nested-dropdown {
-            display: block;
-        }
-
-        p.name {
-            font-size: 1.6em;
-            font-weight: bold;
-        }
-
-        p.designation {
-            font-size: 1.3em;
-        }
-
-        .download-resume button {
-            font-size: 1.2em;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 30px;
-            background: rgb(0, 0, 0);
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .download-resume button:hover {
-            background: rgb(0, 0, 0);
-            transform: translateY(-3px);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 10px;
-        }
-
-        .project-box {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            color: #fff;
-            transition: transform 0.3s ease;
-        }
-
-        .project-box:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .project-box img {
-            max-width: 100%;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        .project-box h3 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .project-box p {
-            font-size: 0.9em;
-            margin-bottom: 10px;
-        }
-
-        .project-box a {
-            color: #fff;
-            text-decoration: underline;
-            font-size: 0.9em;
-        }
-
-        /* Dark Mode Toggle */
-        #dark-mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: #fff;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 9999;
-            font-size: 1.2em;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Loading Animation */
-        #loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s;
-        }
-
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid #fff;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Profile View Counter */
-        .view-counter {
-            margin-top: 10px;
-            font-size: 1em;
-            color: #fff;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px;
-            border-radius: 5px;
-        }
-
-        /* Popup Notifications */
-        .popup-notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            z-index: 9999;
-            display: none;
-            animation: fadeIn 1s;
-        }
-
-        .popup-notification button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            background: #fff;
-            color: #000;
-            cursor: pointer;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Custom Cursor */
-        #custom-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s ease;
-        }
-
-        /* Current Time Display */
-        #current-time {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            z-index: 9999;
-        }
-    </style>
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+    a{ text-underline-offset: 2px; }
+  </style>
 </head>
 <body>
-    <!-- Loading Animation -->
-    <div id="loading">
-        <div class="spinner"></div>
+  <!-- Loading -->
+  <div id="loading" role="status" aria-live="polite"><div class="spinner" aria-label="Loading"></div></div>
+
+  <!-- LEFT (90%) -->
+  <main class="left" aria-label="Main content">
+    <!-- Header (photo + name + role) on top-left -->
+    <div class="header">
+      <img class="profile-photo" src="Muttaki.jpg" alt="Portrait of Muttaki I. Bismoy" loading="eager"/>
+      <div class="title-wrap">
+        <h1 class="hero-name">Muttaki I. Bismoy</h1>
+        <p class="hero-role">ML & Computer Vision Engineer • UAV Forestry • WiFi Sensing (BFI/CSI) • Embedded AI</p>
+        <p class="hero-role">mbismoy@umich.edu | +1(616) 375-4002 | Detroit, MI, USA</p>
+      </div>
     </div>
 
-    <!-- Dark Mode Toggle -->
-    <button id="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
-
-    <!-- Current Time Display -->
-    <div id="current-time"></div>
-
-    <!-- Custom Cursor -->
-    <div id="custom-cursor"></div>
-
-    <!-- Left Section -->
-    <div class="left-section">
-        <button onclick="toggleDropdown(this)">Who am I?</button>
-        <div class="dropdown">
-            <p id="typewriter"></p>
-        </div>
-
-        <button onclick="toggleDropdown(this)">Skills</button>
-        <div class="dropdown">
-            <p>• Machine Learning & NLP: Data Engineering, Recommender Systems, Transformer Models (Wav2Vec2Processor, DistilRoBERTa, SpeechBrain)</p>
-            <p>• Python based Libraries: OpenCV, Pandas, Scikit-image, Tensorflow, Keras, PyTorch, Torchvision, NumPy, Pillow, Seaborn, DeepFace, Matplotlib</p>
-            <p>• Software Development: Flask, VueJS, PyQt5, Streamlit, Electron; Code Analysis Tool: ESLint (Prettier)</p>
-            <p>• Programming Languages: Python, Java, Dart, Javascript and R</p>
-            <p>• Software: VS Code, PyCharm, Android Studio, Adobe AI, Eclipse, Jupyter Notebook, Netbeans (Java) & MS Office</p>
-            <p>• Software Testing: PyUnit, JUnit, Selenium, Mutation Testing, Code Coverage, Boundary Value Testing</p>
-            <p>• Platforms: Google Colab, Firebase, Docker, Google Cloud Platform, GitHub, and Electron</p>
-            <p>• Research: Published one paper on IEEE Xplore and 2 under peer-review; Grant Writing: Overleaf (LaTex)</p>
-            <p>• Demonstrated leadership and collaboration, ensuring effective interpersonal and client communication</p>
-            <p>• Computer Vision (using Deep Learning Models, YoloV4, CNN, Fast-CNN, RNN and Multiple Pre-trained Models: EfficientNetB1, DenseNet201, ResNet50, MobileNet, VGG16, and EfficientNetB0)</p>
-            <p>• Eval Boards: RaspberryPi, ArduinoUNO; Wireless Communication Tools: Wireshark</p>
-            <p>• Database Management: MySQL, NoSQL, Redis, Neo4j</p>
-        </div>
-
-        <button onclick="toggleDropdown(this)">Experience</button>
-        <div class="dropdown">
-            <p class="name">Graduate Research Assistant</p>
-            <p class="designation">Grand Valley State University, Applied Computing Institute</p>
-            <p>Aug 2023 – Present</p>
-            
-            <button class="nested-button" onclick="toggleNestedDropdown(this)">Oak Wilt Detection – Michigan DNR</button>
-            <div class="nested-dropdown">
-                <p>• Developed & trained Machine Learning model (98.37% accuracy, 97% recall) for oak wilt detection using UAV images</p>
-                <p>• Implemented a VueJS and Flask-based web app integrated with Google Cloud for real-time analytics</p>
-                <p>• Built visualization dashboards using Streamlit and OpenStreetMap for policy-level decision-making</p>
-                <p>• Integrated Reinforcement learning from human feedback (RLHF) for dynamic model improvements</p>
-                <p>• Authored research proposals & grant applications (67th Forest Pest Management Forum, Reach-Higher Showcase ‘24)</p>
-                <p>• Labeled multispectral image data and ran it on YoloV4; Hosted oak wilt detection website using Google Cloud Platform</p>
-                <p>• Conducted webhost testing with multiple testing tools (Selenium, PyUnit) for both frontend and backend</p>
-                <p>• Built PyQt5 desktop app for image down sampling & JPG conversion, focusing on UAV images</p>
-            </div>
-            
-            <button class="nested-button" onclick="toggleNestedDropdown(this)">Sermon Interpretation - PRTS</button>
-            <div class="nested-dropdown">
-                <p>• Developed audio & text-based emotion recognition systems using NLP models like Wav2Vec2Processor & DistilRoBERTa</p>
-                <p>• Built real-time recommender systems for matching sermon emotions using transformer-based architectures</p>
-                <p>• Conducted bi-weekly scrums to track project milestones and performance metrics</p>
-            </div>
-            
-            <p class="name">Media Executive (TV Data Analyst)</p> 
-            <p class="designation">GroupM Bangladesh</p>
-            <p>Aug 2022 – Aug 2023</p>
-            <p>• Planned avg. 37 monthly campaigns for Marico Bangladesh, delivered 41% monthly ROI by designing data-driven strategies</p>
-            <p>• Automated and optimized reporting pipelines, reducing reporting time by 20%</p>
-            <p>• Conducted data-driven market research, identifying trends to drive – 4+ innovative campaigns annually</p>
-            <p>• Implemented ad positioning experiment, improving customer value by 21%</p>
-        </div>
-
-        <button onclick="toggleDropdown(this)">Education</button>
-        <div class="dropdown">
-            <p class="name">Grand Valley State University - Masters in Applied Computer Science</p>
-            <p>Major in Software Engineering</p>
-            <p>Aug 2023 - current</p>
-            <p>CGPA - 3.87 in a scale of 4.00</p>
-            <p>30 out of 33 Credit Hours Completed</p> 
-            
-            <p class="name">BRAC University - BSc. in Engg. in Computer Science and Engineering</p>
-            <p>Jan 2018 - Jun 2022</p>
-            <p>CGPA - 3.74 in a scale of 4.00; in major 3.89</p>
-        </div>
-
-        <button onclick="toggleDropdown(this)">Projects</button>
-        <div class="dropdown">
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-box">
-                    <img src="p2.png" alt="Project 1">
-                    <h3>Sign Language Detection</h3>
-                    <p>Real-time detection of Bangladeshi Sign Language using CNNs with 98.45% accuracy.</p>
-                    <a href="https://drive.google.com/drive/folders/1L9ZAGMhnF7mA2CD9leIpZ1IzD-ziPd61?usp=sharing" target="_blank">View Project</a>
-                    <a href="https://github.com/MuttakiIslamBismoyBracu18/Sign-Language-Detection-ASL-BdSL-" target="_blank">Code</a>
-                </div>
-                <!-- Project 2 -->
-                <div class="project-box">
-                    <img src="p1.png" alt="Project 2">
-                    <img src="p2_1.png" alt="Project 2">
-                    <h3>Oak Wilt Detection</h3>
-                    <p>UAV-based Oak Wilt detection model with 98.37% accuracy, deployed via Google Cloud.</p>
-                    <a href="https://youtu.be/X4GLZxCGJ0c?si=_EuaBLlaE-_dSdA6" target="_blank">View Project</a>
-                    <a href="https://github.com/MuttakiIslamBismoyBracu18/DNR_Oak_Wilt_Detection" target="_blank">Code</a>
-                </div>
-                <!-- Add More Projects -->
-                <div class="project-box">
-                    <img src="p3.png" alt="Project 3">
-                    <img src="p3_2.png" alt="Project 3">
-                    <h3>Human Emotion Detection</h3>
-                    <p>Detected Human Emotion for Sermon Interpretation using DeepFace, DistilRoBERTa, Speechbrain and Wav2Vec2Processor</p>
-                    <a href="https://youtu.be/lLERD2_TygU" target="_blank">View Project</a>
-                    <a href="https://github.com/MuttakiIslamBismoyBracu18/Human-Emotion-Detection" target="_blank">Code</a>
-                </div>
-                <div class="project-box">
-                    <img src="p4.png" alt="Project 4">
-                    <h3>Real Time Gesture Detection</h3>
-                    <p>Basic Gesture Detection using CNN [100% Accuracy]</p>
-                    <a href="https://github.com/MuttakiIslamBismoyBracu18/RealTimeGestureDetection" target="_blank">Code</a>
-                </div>
-                <div class="project-box">
-                    <img src="p5.png" alt="Project 5">
-                    <h3>Horoscope from Birthdate</h3>
-                    <p> I developed a website for my half-semester project that allows users to enter their birthdate or any other
-                        date and receive a variety of numerical values and a horoscope in return. It calculates the user's age in years, months, weeks, and days, identifies their generation, and
-                        provides interesting numerological insights, such as life path numbers. </p>
-                    <a href="https://github.com/MuttakiIslamBismoyBracu18/Horoscope-Birthday" target="_blank">Code</a>
-                </div>
-                <div class="project-box">
-                    <img src="p7.png" alt="Project 7">
-                    <h3>Monthly Spend Analyzer</h3>
-                    <p> Developed using the PyQt5 framework, the Monthly Expense Tracker provides a robust solution for managing personal and household financial data through an intuitive interface based on the Model-View-Controller (MVC) architectural pattern. The application enables users to efficiently record, analyze, and interpret their spending habits, providing a suite of features designed to enhance financial literacy and promote informed budgeting.</p>
-                    <a href="https://github.com/MuttakiIslamBismoyBracu18/Monthly-Spend-Tracker-and-Analyzer" target="_blank">Code</a>
-                    <a href="https://docs.google.com/presentation/d/1gWluwDH0S0lL7rNpGCdkPNwMgAE0TdDtSmGtX4MRDZ0/edit?usp=sharing" target="_blank">Project Details</a>
-                </div>
-                <div class="project-box">
-                    <img src="p6.png" alt="Project 6">
-                    <h3>Click the link below for More Projects like these ...</h3>
-                    <a href="https://github.com/MuttakiIslamBismoyBracu18" target="_blank">GitHub</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Papers Button -->
-        <button onclick="toggleDropdown(this)">Papers</button>
-        <div class="dropdown">
-            <ul>
-                <li>
-                    Bismoy, M.I., Shahrear, F., Mitra, A., Bikash, D.M., Afrin, F., Roy, S., & Arif, H. (2022). Image Translation of Bangla and English Sign Language to Written Language using Convolutional Neural Network <a href="https://ieeexplore.ieee.org/document/9988088?fbclid=IwAR2Qx488dmD8HpKsp3VU8FRr22MffU2ngNLDeLh5hAfkamSHgkZqjHJ62YQ" target="_blank">Read Paper</a>
-                </li>
-                <li>
-                    Bismoy, M.I., Rafiq, R.I., Burns, L., Frei, H., & Alphenaar, G. (2025). Early Detection of Oak Wilt Using Machine Learning and Unmanned Aerial Vehicles (UAVs) <a href="https://www.icmlc.org/" target="_blank">Peer Reviewing at ICMLC2025</a>
-                </li>
-                <li>
-                    Bismoy, M.I., Hridi, N.A., Shahrear, F. & Mitra, A., (2025). Real-Time Recognition of Bangladeshi Sign Language Using State-of-the-Art Deep Learning Architectures <a href="https://example.com/paper2" target="_blank">Not yet Published</a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Relevant Graduate Courses Button -->
-        <button onclick="toggleDropdown(this)">Relevant Graduate Courses</button>
-        <div class="dropdown">
-            <p class="name">Requirement Specifications</p>
-            <p>• Gained hands-on experience in collaborative problem solving, technical design, and communication protocols for software requirement documentation</p>
-            <p>• Worked on model development, incident response planning, and operational efficiency for large-scale software systems</p>
-            <p>• Built a classification system and intelligent system architecture to optimize software development workflow</p>
-
-            <p class="name">Software Testing</p>
-            <p>• Applied test automation, monitoring tools, and performance monitoring using Selenium, PyUnit, and boundary value testing</p>
-            <p>• Developed a logging and observability platform to track software performance and detect failures in CI/CD pipelines</p>
-            <p>• Designed a workflow orchestration tool to improve test case management for multiple projects simultaneously</p>
-
-            <p class="name">Software Design Methodologies</p>
-            <p>• Focused on software development best practices, version control, and model development for enterprise systems</p>
-            <p>• Led a prototyping project that optimized resource management and pipeline development for scalable cloud applications</p>
-            <p>• Applied data integration and data protection techniques to enhance data security in distributed systems</p>
-
-            <p class="name">Knowledge Discovery and Data Mining</p>
-            <p>• Developed unsupervised learning models for data analysis and pattern recognition, improving data interpretation in financial analytics</p>
-            <p>• Built LLMs-based anomaly detection models, enhancing incident response and production deployment stability</p>
-            <p>• Implemented GIS and spatial data analysis techniques, ensuring real-time decision-making in high-risk scenarios</p>
-
-            <p class="name">Data Engineering</p>
-            <p>• Designed and implemented ETL pipelines, versioning control, and multiple data processing workflows for real-world applications</p>
-            <p>• Integrated real-time monitoring tools for data ingestion, transformation, and storage, improving observability and operational efficiency</p>
-            <p>• Applied ML algorithm-based data engineering techniques to optimize classification system and model tuning for data pipelines</p>
-
-            <p class="name">Information Visualization</p>
-            <p>• Developed interactive dashboards using GIS-based spatial databases, and image processing techniques</p>
-            <p>• Created video processing and image segmentation models to enhance medical device data interpretation and performance monitoring</p>
-            <p>• Built a virtual assistant using NLP and BERT models for automated data analysis and reporting in enterprise systems</p>
-        </div>
+    <!-- Summary -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Summary</button>
+    <div class="dropdown" role="region" aria-label="Summary">
+      <ul class="list-tight">
+        <li>Machine Learning & Computer Vision engineer with <strong>4+ years</strong> of applied research building <strong>deployable AI</strong> systems across UAV forestry, embedded devices, and WiFi sensing.</li>
+        <li><strong>PhD researcher</strong> on gesture detection with WiFi <strong>beamforming feedback matrices</strong> (MATLAB + Python + AP/Router pipelines; cybersecurity context).</li>
+        <li>Led forestry models: <strong>Oak Wilt</strong> (SwinV2-Tiny <strong>98.68%</strong> acc.) and <strong>HWA</strong> (<strong>97.37%</strong> acc.); built a <strong>Raspberry Pi 5</strong> field device for real-time inference.</li>
+        <li>Experienced with transformers & ViTs: <strong>Swin-Tiny/V2, BEiT/BEiT-v2, ConvNeXt, ViT-B/16</strong> and CNNs (EfficientNet, DenseNet, ResNet, MobileNet, VGG).</li>
+        <li>Tooling: <strong>MATLAB</strong>, <strong>PyTorch/Torchvision/Torchaudio</strong>, <strong>timm</strong>, OpenCV, Scikit-learn.</li>
+        <li>Passionate about <strong>applied research</strong> bridging academia & industry via scalable, reproducible AI.</li>
+      </ul>
     </div>
 
-    <!-- Center Section -->
-    <div class="center-section">
-        <img src="Muttaki.jpg" alt="Muttaki I. Bismoy">
+    <!-- Who am I (typewriter) -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Who am I?</button>
+    <div class="dropdown" role="region" aria-label="Who am I details">
+      <p id="typewriter" class="mono" aria-live="polite"></p>
     </div>
 
-    <!-- Right Section -->
-    <div class="right-section">
-        <a href="https://www.linkedin.com/in/muttaki-bismoy/" target="_blank">
-            <img src="linkedin-icon.png" alt="LinkedIn">
-        </a>
-        <a href="https://github.com/MuttakiIslamBismoyBracu18" target="_blank">
-            <img src="github-icon.png" alt="GitHub">
-        </a>
-        <a href="mailto:bismoym@mail.gvsu.edu">
-            <img src="email-icon.png" alt="Email">
-        </a>
-        <a href="https://www.facebook.com/obak.bismoy" target="_blank">
-            <img src="facebook-icon.png" alt="Facebook">
-        </a>
-        <a href="https://x.com/obakbismoy" target="_blank">
-            <img src="twitter.png" alt="Twitter">
-        </a>
-        <a href="https://www.instagram.com/______s_p_a_c_e_______/" target="_blank">
-            <img src="instagram.png" alt="Instagram">
-        </a>
-        <a href="https://www.youtube.com/@bismoy1100" target="_blank">
-            <img src="youtube.png" alt="YouTube">
-        </a>
-        <div class="download-resume">
-            <a href="https://drive.google.com/drive/folders/1UKWeiSRdF1DnSKR7CXSPthDX1Fbnj4QI?usp=sharing" target="_blank">
-                <button type="submit">Download Resume</button>
-            </a>
+    <!-- Skills -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Skills</button>
+    <div class="dropdown" role="region" aria-label="Skills">
+      <ul class="list-tight">
+        <li><strong>Transformer/Vision Models:</strong> Swin-Tiny, SwinV2, BEiT, BEiT-v2, ConvNeXt, ViT-B/16; <strong>CNNs:</strong> EfficientNet B0/B1, DenseNet201, ResNet50, MobileNet, VGG16; <strong>NLP:</strong> BERT, GPT, Wav2Vec2, DistilRoBERTa; <strong>Prompt Engineering</strong></li>
+        <li><strong>Wireless Sensing & Cybersecurity:</strong> WiFi sensing, <strong>BFI/CSI extraction</strong>, beamforming feedback matrices, AP/Router configuration, <strong>Radiotap/Dot11 parsing</strong>, <strong>time-windowing</strong></li>
+        <li><strong>Programming:</strong> Python, MATLAB, Java, JavaScript, SQL, R, Dart</li>
+        <li><strong>ML/AI Frameworks:</strong> PyTorch, Torchvision, Torchaudio, timm, OpenCV, Pillow, Scikit-learn, <strong>Scapy</strong>, NumPy, Pandas, Matplotlib, <strong>argparse</strong>, SciPy (<span class="mono">loadmat</span>)</li>
+        <li><strong>Software & Web:</strong> FastAPI, Flask, VueJS, Streamlit, HTML/CSS, PyQt5 (MVC), Docker, REST, GCP/Firebase</li>
+        <li><strong>Data & Visualization:</strong> ETL pipelines, PostgreSQL, MongoDB, <strong>Tableau</strong>, Seaborn</li>
+        <li><strong>Remote Sensing & Geospatial:</strong> Sentinel-1/2 processing, Google Earth Engine (GEE), <strong>NDVI/LAI/LCR modeling</strong>, Random Forest regression, <strong>Stand Health Index mapping</strong>, UAV multispectral imagery</li>
+        <li><strong>Embedded Systems:</strong> Microcontrollers, sensor fusion, <strong>real-time inference</strong>, Raspberry Pi 5 deployments</li>
+        <li><strong>Software Testing:</strong> Selenium, PyUnit, Mutation Testing, Boundary Value Testing, Performance Benchmarking</li>
+      </ul>
+    </div>
+
+    <!-- Work Experience -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Work Experience</button>
+    <div class="dropdown" role="region" aria-label="Work Experience">
+      <p class="name">Graduate Research Assistant</p>
+      <p class="designation">Cybersecurity Research Lab, University of Michigan–Dearborn</p>
+      <p><em>Aug 2025 – Present</em></p>
+      <button class="nested-button" onclick="toggleNestedDropdown(this)">WiFi Sensing — Gesture Detection via BFI</button>
+      <div class="nested-dropdown">
+        <ul class="list-tight">
+          <li>Researching gesture detection from <strong>beamforming feedback matrices</strong>; building MATLAB/Python hybrid parsers (<strong>Radiotap/Dot11</strong>) and shell-driven ETL for large <strong>pcapng</strong> corpora.</li>
+          <li>Implementing robust <strong>time-sync</strong>, <strong>batching (~0.1s ≈ 10 packets)</strong>, and <strong>feature extraction</strong> for AP/Router streams.</li>
+          <li>Designing <strong>reproducible experiments</strong> for cybersecurity and HCI tasks.</li>
+        </ul>
+      </div>
+
+      <p class="name">Software Developer</p>
+      <p class="designation">Edge Forestry (Blue Nucleus), Grand Rapids, MI</p>
+      <p><em>Apr 2025 – Aug 2025</em></p>
+      <button class="nested-button" onclick="toggleNestedDropdown(this)">UAV Disease Detection — Oak Wilt & HWA</button>
+      <div class="nested-dropdown">
+        <ul class="list-tight">
+          <li>Built UAV-based Oak Wilt detection deployed by <strong>Michigan DNR</strong>; companion tooling in <strong>Vue.js</strong>, <strong>Flask</strong>, <strong>Streamlit</strong>.</li>
+          <li>Modeled forest canopy structure and developed a novel <strong>Stand Health Index</strong> with <strong>Sentinel-1/2</strong> + Random Forest; <strong>LAI/LCR</strong> estimation (<strong>R² up to 0.82</strong>).</li>
+          <li>Integrated <strong>SwinV2-Tiny</strong> achieving <strong>98.68% (Oak Wilt)</strong> and <strong>97.37% (HWA)</strong>; created a <strong>Raspberry Pi 5</strong> field device for edge inference.</li>
+        </ul>
+      </div>
+
+      <p class="name">Graduate Research Assistant</p>
+      <p class="designation">Grand Valley State University, Applied Computing Institute</p>
+      <p><em>Aug 2023 – Apr 2025</em></p>
+      <button class="nested-button" onclick="toggleNestedDropdown(this)">Oak Wilt Detection — Michigan DNR</button>
+      <div class="nested-dropdown">
+        <ul class="list-tight">
+          <li>Developed <strong>real-time AI</strong> models for <strong>sign language</strong> (up to <strong>99.85%</strong> with DenseNet201/EfficientNetB1).</li>
+          <li>Designed <strong>UAV-based Oak Wilt</strong> detection system (<strong>98.37%</strong> accuracy), deployed on <strong>Google Cloud Platform</strong>.</li>
+          <li>Optimized image pipelines (−<strong>30%</strong> compute) using CNN-based feature extraction.</li>
+          <li>Automated testing with <strong>PyUnit</strong> & <strong>Selenium</strong>, achieving <strong>98% code coverage</strong>.</li>
+          <li>Applied <strong>LLMs</strong> (BERT, DistilRoBERTa) for sentiment analysis, improving classification speed by <strong>30%</strong>.</li>
+        </ul>
+      </div>
+      <button class="nested-button" onclick="toggleNestedDropdown(this)">Sermon Interpretation — PRTS</button>
+      <div class="nested-dropdown">
+        <ul class="list-tight">
+          <li>Built a multimodal emotion system: <strong>Wav2Vec2 + DistilRoBERTa + DeepFace</strong>; real-time dashboard & exportable plots.</li>
+        </ul>
+      </div>
+
+      <p class="name">Machine Learning & Data Analyst</p>
+      <p class="designation">GroupM Bangladesh</p>
+      <p><em>Aug 2022 – Aug 2023</em></p>
+      <ul class="list-tight">
+        <li>Built AI-powered market analysis tools; reduced campaign planning time by <strong>20%</strong>.</li>
+        <li>Developed automated Python trend-forecasting scripts, contributing to a <strong>41% ROI</strong> increase.</li>
+        <li>Conducted trend analysis supporting <strong>4+ annual campaigns</strong>; integrated reporting with Pandas/NumPy/Matplotlib.</li>
+      </ul>
+    </div>
+
+    <!-- Education -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Education</button>
+    <div class="dropdown" role="region" aria-label="Education">
+      <p class="name">University of Michigan — Rackham Graduate School, Dearborn</p>
+      <p>PhD in Computer & Information Science — <em>Aug 2025 – Present</em></p>
+      <p><strong>Research:</strong> WiFi sensing, beamforming feedback (BFI)–based gesture detection</p>
+      <hr style="border-color: rgba(15,23,42,.15)">
+      <p class="name">Grand Valley State University</p>
+      <p>M.S. in Applied Computer Science (Software Engineering) — <em>Aug 2023 – 2025</em> | <strong>CGPA:</strong> 3.87/4.00</p>
+      <p><strong>Thesis:</strong> Early Detection of Oak Wilt using UAV & Computer Vision</p>
+      <hr style="border-color: rgba(15,23,42,.15)">
+      <p class="name">BRAC University</p>
+      <p>BSc. in Computer Science and Engineering — <em>Jan 2018 – Jun 2022</em> | <strong>CGPA:</strong> 3.82/4.00 (Major: 3.89/4.00)</p>
+      <hr style="border-color: rgba(15,23,42,.15)">
+      <p class="name">Notre Dame College</p>
+      <p>HSC — <em>2017</em> | <strong>GPA:</strong> 5.00/5.00</p>
+      <hr style="border-color: rgba(15,23,42,.15)">
+      <p class="name">Ideal School and College</p>
+      <p>SSC — <em>2015</em> | <strong>GPA:</strong> 5.00/5.00</p>
+    </div>
+
+    <!-- Projects -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Projects</button>
+    <div class="dropdown" role="region" aria-label="Projects">
+      <div class="projects-grid">
+        <div class="project-box">
+          <img src="wifi_bfi.png" alt="WiFi BFI Gesture Detection (placeholder)" loading="lazy"/>
+          <h3>WiFi-Sensing Gesture Detection (BFI)</h3>
+          <p>MATLAB/Python toolchain to parse <strong>PcapNg</strong> (Scapy), extract <strong>Radiotap/802.11</strong> fields, <strong>batch windowing</strong> (~0.1s ≈ 10 packets), and feature generation for classification.</p>
         </div>
-        <div class="download-resume">
-            <a href="https://drive.google.com/drive/folders/1eMYyYl33q2nrrlSxWw4ZQYHFmROA8HsA?usp=sharing" target="_blank">
-                <button type="submit">Download CV</button>
-            </a>
+        <div class="project-box">
+          <img src="shi.png" alt="Stand Health Index maps" loading="lazy"/>
+          <h3>Forest Canopy Structure Modeling & Stand Health Index</h3>
+          <p>Random Forest & SVM on <strong>Sentinel-1/2</strong> imagery + field data to estimate <strong>LAI/LCR</strong> (<strong>R² up to 0.82</strong>) and generate landscape-scale <strong>stand health</strong> maps.</p>
+          <a href="https://github.com/MuttakiIslamBismoyBracu18/Location_Categorization_from_ForestHealthIndex" target="_blank" rel="noopener">Code</a>
         </div>
-        <div class="view-counter">
-            Profile views: <span id="profile-views">0</span>
+        <div class="project-box">
+          <img src="p2.png" alt="Sign Language Detection" loading="lazy"/>
+          <h3>End-to-End ML Pipeline: BdSL/ASL Translation</h3>
+          <p>Real-time sign language recognition using CNNs; achieved up to <strong>99.85%</strong> accuracy with <strong>DenseNet201/EfficientNetB1</strong>.</p>
+          <a href="https://drive.google.com/drive/folders/1L9ZAGMhnF7mA2CD9leIpZ1IzD-ziPd61?usp=sharing" target="_blank" rel="noopener">Project</a>
+          <a href="https://github.com/MuttakiIslamBismoyBracu18/Sign-Language-Detection-ASL-BdSL-" target="_blank" rel="noopener">Code</a>
         </div>
+        <div class="project-box">
+          <img src="p1.png" alt="Oak Wilt Detection 1" loading="lazy"/>
+          <img src="p2_1.png" alt="Oak Wilt Detection 2" loading="lazy"/>
+          <h3>CNN-based Real-Time Oak Wilt Detection (UAV)</h3>
+          <p>Deep learning on high-resolution UAV imagery; <strong>98.37%</strong> accuracy; deployed on <strong>GCP</strong> with a Vue/Flask front-end.</p>
+          <a href="https://youtu.be/X4GLZxCGJ0c?si=_EuaBLlaE-_dSdA6" target="_blank" rel="noopener">Demo</a>
+          <a href="https://github.com/MuttakiIslamBismoyBracu18/DNR_Oak_Wilt_Detection" target="_blank" rel="noopener">Code</a>
+        </div>
+        <div class="project-box">
+          <img src="rpi5.png" alt="Raspberry Pi 5 Field Device" loading="lazy"/>
+          <h3>Raspberry Pi 5 Disease Detector</h3>
+          <p>Edge inference using <strong>SwinV2-Tiny</strong>: Oak Wilt <strong>98.68%</strong>, HWA <strong>97.37%</strong>; camera capture, pre/post-processing, and on-device inference.</p>
+        </div>
+        <div class="project-box">
+          <img src="p3.png" alt="Multimodal Emotion 1" loading="lazy"/>
+          <img src="p3_2.png" alt="Multimodal Emotion 2" loading="lazy"/>
+          <h3>Advanced Multimodal Emotion Recognition</h3>
+          <p><strong>Wav2Vec2 + DistilRoBERTa + DeepFace</strong>; unified dashboard and exportable plots for sermon analysis.</p>
+          <a href="https://youtu.be/lLERD2_TygU" target="_blank" rel="noopener">Demo</a>
+          <a href="https://github.com/MuttakiIslamBismoyBracu18/Human-Emotion-Detection" target="_blank" rel="noopener">Code</a>
+        </div>
+        <div class="project-box">
+          <img src="p4.png" alt="Real Time Gesture Detection" loading="lazy"/>
+          <h3>Real-Time Gesture Detection</h3>
+          <p>Basic CNN prototype; <strong>100%</strong> accuracy on a constrained gesture set.</p>
+          <a href="https://github.com/MuttakiIslamBismoyBracu18/RealTimeGestureDetection" target="_blank" rel="noopener">Code</a>
+        </div>
+        <div class="project-box">
+          <img src="p7.png" alt="Monthly Spend Analyzer" loading="lazy"/>
+          <h3>Monthly Expense Tracker (PyQt5, MVC)</h3>
+          <p>Desktop application for personal/household finances with charts and editing workflows.</p>
+          <a href="https://github.com/MuttakiIslamBismoyBracu18/Monthly-Spend-Tracker-and-Analyzer" target="_blank" rel="noopener">Code</a>
+          <a href="https://docs.google.com/presentation/d/1gWluwDH0S0lL7rNpGCdkPNwMgAE0TdDtSmGtX4MRDZ0/edit?usp=sharing" target="_blank" rel="noopener">Slides</a>
+        </div>
+        <div class="project-box">
+          <img src="p5.png" alt="Horoscope from Birthdate" loading="lazy"/>
+          <h3>Horoscope from Birthdate</h3>
+          <p>Web app for age breakdowns, generation tagging, and numerology insights.</p>
+          <a href="https://github.com/MuttakiIslamBismoyBracu18/Horoscope-Birthday" target="_blank" rel="noopener">Code</a>
+        </div>
+        <div class="project-box">
+          <img src="p6.png" alt="More Projects" loading="lazy"/>
+          <h3>More Projects</h3>
+          <a href="https://github.com/MuttakiIslamBismoyBracu18" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Bottom Left Section -->
-    <div class="bottom-left">
-        <p class="name">Muttaki I. Bismoy</p>
-        <p class="designation">Machine Learning Engineer</p>
+    <!-- Selected Presentations & Workshops -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Selected Presentations & Workshops</button>
+    <div class="dropdown" role="region" aria-label="Selected Presentations & Workshops">
+      <ul class="list-tight">
+        <li><strong>Graduate Research Showcase 2025</strong>, GVSU — Poster: Early Detection of Oak Wilt using ML & UAVs.</li>
+        <li><strong>Innovation Day 2025</strong>, GVSU — Demo: Emotion Interpreter — Real-Time Multimodal Feedback System for Sermon Analysis.</li>
+        <li><strong>Reach Higher Showcase 2024</strong>, GVSU — Exhibit: Early Detection of Oak Wilt via UAV & CV.</li>
+        <li><strong>North Central Forest Pest Workshop 2025</strong> — Participating researcher, Oak Wilt UAV-based detection. <a href="https://forestpathology.org/ncfpw/ncfpw/" target="_blank" rel="noopener">Link</a></li>
+      </ul>
     </div>
 
-    <!-- Bottom Right Section -->
-    <div class="bottom-right">
-        <p>Contact: +1 (616) 375-4002</p>
-        <p> Email: bismoym@mail.gvsu.edu</p>
-        <p>Address: 304 Manzana Ct NW, </p>
-        <p>Walker, MI 49534, USA</p>
+    <!-- Publications -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Publications</button>
+    <div class="dropdown" role="region" aria-label="Publications">
+      <ul class="list-tight">
+        <li>Bismoy, M. I., Shahrear, F., Mitra, A., Bikash, D. M., Afrin, F., Roy, S., & Arif, H. (2022).
+          Image translation of Bangla and English sign language to written language using convolutional neural network.
+          <em>ICECCME 2022</em>, IEEE. <a href="https://ieeexplore.ieee.org/document/9988088" target="_blank" rel="noopener">IEEE Xplore</a>
+          <span class="mono">| doi:10.1109/ICECCME55909.2022.9988088</span>
+        </li>
+        <li>Bismoy, M. I., Rafiq, R. I., Burns, L., Frei, H., & Alphenaar, G. (2025).
+          Early Detection of Oak Wilt Using Machine Learning and UAVs. <em>ICMLC 2025</em>, Springer.
+          <a href="https://doi.org/10.1007/978-3-031-94898-5_17" target="_blank" rel="noopener">DOI</a>
+        </li>
+        <li>Bismoy, M. I., & Rafiq, R. I. (2026). Advancing UAV-based Forest Disease Surveillance: Comparative Analysis of CNN, Hybrid and ViT models for Early Detection of Oak Wilt. <em>ACM SAC ’26</em>, Thessaloniki, Greece — <strong>In Review</strong>.</li>
+        <li>Bismoy, M. I., Rafiq, R. I., Burns, L., Frei, H., & Alphenaar, G. (2025). Data Collection and Detection of Oak Wilt using RLHF and UAVs. In <em>Recent Advances in Robotic Perception for Forestry</em> — <strong>In Preparation</strong>.</li>
+      </ul>
     </div>
 
-    <!-- Popup Notifications -->
-    <div id="popup1" class="popup-notification">
-        <p>Muttaki is currently looking for Internship opportunities as a Machine Learning Engineer, Software Engineer, Full Stack Web Developer, or Research based on NLP, DL, or Computer Vision.</p>
-        <button onclick="closePopup('popup1')">Close</button>
+    <!-- Thesis & Preprint -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Thesis & Preprint</button>
+    <div class="dropdown" role="region" aria-label="Thesis & Preprint">
+      <ul class="list-tight">
+        <li><strong>Master’s Thesis (2025), GVSU</strong> — Early Detection of Oak Wilt using UAV & Computer Vision.
+          <a href="https://scholarworks.gvsu.edu/theses/1161/" target="_blank" rel="noopener">ScholarWorks</a>
+        </li>
+        <li><strong>Oak Wilt UAV Aerial Imagery Dataset (2025)</strong>, Zenodo — Oak Wilt vs. Not Oak Wilt.
+          <span class="mono">doi:10.5281/zenodo.17109752</span> —
+          <a href="https://doi.org/10.5281/zenodo.17109752" target="_blank" rel="noopener">Dataset</a>
+        </li>
+      </ul>
     </div>
 
-    <div id="popup2" class="popup-notification">
-        <p>He does not and will not require H1B sponsorship. He is brown, Asian, not a protected veteran, and does not have any disabilities. Feel free to email him regarding job opportunities.</p>
-        <button onclick="closePopup('popup2')">Close</button>
+    <!-- Certifications -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Certifications</button>
+    <div class="dropdown" role="region" aria-label="Certifications">
+      <ul class="list-tight">
+        <li><strong>CITI Program</strong> (Issued Apr 2025 — Expires Apr 2034)
+          <ul class="list-tight">
+            <li>HSR — Social-Behavioral-Educational Researchers — <strong>ID 67126668</strong></li>
+            <li>IRB Members — Basic/Refresher — <strong>ID 67126669</strong></li>
+            <li>RCR — Applied Computer Sciences Graduate Students — <strong>ID 67126667</strong></li>
+            <li>Wildlife Research — <strong>ID 67126666</strong></li>
+            <li>GCP — Social & Behavioral Research Best Practices (Basic) — <strong>ID 67126670</strong></li>
+          </ul>
+        </li>
+        <li><strong>Machine Learning — TestDome</strong> (Jan 2025), <strong>Top 10%</strong></li>
+        <li><strong>Thesis & Dissertation Workshop</strong> — Grand Valley State University (Winter 2025)</li>
+        <li><strong>IELTS Academic</strong> — Overall Band <strong>7.0</strong> (CEFR C1), Jul 2022</li>
+      </ul>
     </div>
 
-    <!-- Scripts -->
-    <script>
-        function toggleDropdown(button) {
-            const dropdown = button.nextElementSibling;
-            if (dropdown && dropdown.classList.contains('dropdown')) {
-                const isVisible = dropdown.style.display === 'block';
-                document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
-                dropdown.style.display = isVisible ? 'none' : 'block';
-            }
-        }
+    <!-- Awards & Honors -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Awards & Honors</button>
+    <div class="dropdown" role="region" aria-label="Awards & Honors">
+      <ul class="list-tight">
+        <li><strong>67th Forest Pest Management Forum</strong> — UAV Disease Detection Showcase (2024)</li>
+        <li><strong>Reach Higher Showcase ’24</strong> — Oak Wilt ML & UAVs (2024)</li>
+        <li><strong>Best Student Performance Award</strong> — Cambrian School & College (2015)</li>
+        <li>Multiple recognitions in <strong>photography</strong>, <strong>STEM outreach</strong>, and <strong>robotics</strong> (2011–2019)</li>
+      </ul>
+    </div>
 
-        function toggleNestedDropdown(button) {
-            const nestedDropdown = button.nextElementSibling;
-            if (nestedDropdown && nestedDropdown.classList.contains('nested-dropdown')) {
-                const isVisible = nestedDropdown.style.display === 'block';
-                document.querySelectorAll('.nested-dropdown').forEach(d => d.style.display = 'none');
-                nestedDropdown.style.display = isVisible ? 'none' : 'block';
-            }
-        }
+    <!-- References -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">References</button>
+    <div class="dropdown" role="region" aria-label="References">
+      <ul class="list-tight">
+        <li><strong>Dr. Rahat Rafiq</strong> — Assistant Professor, College of Computing, Grand Valley State University.
+          <br/>Relation: Thesis Supervisor and Graduate Mentor —
+          <a href="mailto:rafiq@gvsu.edu">rafiq@gvsu.edu</a>
+        </li>
+        <li><strong>Dr. Lawrence Burns</strong> — Professor, Clinical Psychology, Grand Valley State University.
+          <br/>Relation: Thesis Co-Supervisor and Research Project Mentor —
+          <a href="mailto:burnsl@gvsu.edu">burnsl@gvsu.edu</a>
+        </li>
+      </ul>
+    </div>
 
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-        }
+    <!-- Downloads (preserve Resume/CV links from original site) -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Downloads</button>
+    <div class="dropdown" role="region" aria-label="Downloads">
+      <p>
+        <a href="https://drive.google.com/drive/folders/1UKWeiSRdF1DnSKR7CXSPthDX1Fbnj4QI?usp=sharing" target="_blank" rel="noopener">Download Resume</a>
+        &nbsp;|&nbsp;
+        <a href="https://drive.google.com/drive/folders/1eMYyYl33q2nrrlSxWw4ZQYHFmROA8HsA?usp=sharing" target="_blank" rel="noopener">Download CV</a>
+      </p>
+    </div>
+    <!-- Time label update -->
+    <div id="current-time" aria-live="polite">What’s the time on Muttaki’s Clock — …</div>
+  </main>
 
-        function closePopup(popupId) {
-            document.getElementById(popupId).style.display = 'none';
-        }
+  <!-- RIGHT (10%) — SOCIAL ONLY -->
+  <aside class="right" aria-label="Social links">
+    <div class="icon-col">
+      <a href="mailto:mbismoy@umich.edu" aria-label="Email">
+        <img src="email-icon.png" alt="" loading="lazy"/>
+      </a>
+      <a href="https://www.linkedin.com/in/muttaki-bismoy/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <img src="linkedin-icon.png" alt="" loading="lazy"/>
+      </a>
+      <a href="https://github.com/MuttakiIslamBismoyBracu18" target="_blank" rel="noopener" aria-label="GitHub">
+        <img src="github-icon.png" alt="" loading="lazy"/>
+      </a>
+      <a href="https://scholar.google.com/citations?user=hg6tYLwAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Google Scholar">
+        <img src="scholar.png" alt="" loading="lazy"/>
+      </a>
+      <a href="https://muttakiislambismoybracu18.github.io/PortfolioProject/" target="_blank" rel="noopener" aria-label="Portfolio">
+        <img src="globe.png" alt="" loading="lazy"/>
+      </a>
+      <a href="https://x.com/obakbismoy" target="_blank" rel="noopener" aria-label="X (Twitter)">
+        <img src="twitter.png" alt="" loading="lazy"/>
+      </a>
+      <a href="https://www.facebook.com/obak.bismoy" target="_blank" rel="noopener" aria-label="Facebook">
+        <img src="facebook-icon.png" alt="" loading="lazy"/>
+      </a>
+      <a href="https://www.instagram.com/______s_p_a_c_e_______/" target="_blank" rel="noopener" aria-label="Instagram">
+        <img src="instagram.png" alt="" loading="lazy"/>
+      </a>
+      <a href="https://www.youtube.com/@bismoy1100" target="_blank" rel="noopener" aria-label="YouTube">
+        <img src="youtube.png" alt="" loading="lazy"/>
+      </a>
+    </div>
+  </aside>
 
-        // Typewriter Effect
-        const text = "Machine Learning Engineer with 3+ years of experience in data engineering, AI/ML modeling, and NLP. Built real-time ML pipelines with 99.85% accuracy for Sign Language & 98.37% accuracy for UAV-based Oak Wilt detection. Proficient in recommender systems, transformer models (Wav2Vec2, DistilRoBERTa), and cloud deployment (GCP). Experienced in data visualization and building web applications to deliver actionable insights. Experienced in Agile development, led 2 interns, managing 10+ brands/month, weekly scrums.";
-        let index = 0;
+  <!-- Popups (neutral/professional) -->
+  <div id="popup1" class="popup-notification" role="dialog" aria-modal="false" aria-labelledby="pop1title">
+    <p id="pop1title"><strong>Open to Opportunities</strong></p>
+    <p>Exploring internships and roles in ML/CV, full-stack (Flask/FastAPI + Vue/React), and applied research (NLP, DL, WiFi sensing). Say hi!</p>
+    <button type="button" onclick="closePopup('popup1')">Close</button>
+  </div>
+  <div id="popup2" class="popup-notification" role="dialog" aria-modal="false" aria-labelledby="pop2title">
+    <p id="pop2title"><strong>Let’s Collaborate</strong></p>
+    <p>Research collabs, industry pilots, or advisor intros welcome. Email with scope & timeline.</p>
+    <button type="button" onclick="closePopup('popup2')">Close</button>
+  </div>
 
-        function typeWriter() {
-            if (index < text.length) {
-                document.getElementById("typewriter").innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typeWriter, 50);
-            }
-        }
+  <script>
+    const qs = (s, r=document)=>r.querySelector(s);
+    const qsa = (s, r=document)=>Array.from(r.querySelectorAll(s));
 
-        // Custom Cursor
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.getElementById('custom-cursor');
-            cursor.style.left = `${e.pageX}px`;
-            cursor.style.top = `${e.pageY}px`;
-        });
+    function toggleDropdown(btn){
+      const dd = btn.nextElementSibling;
+      const expanded = btn.classList.contains('active');
+      qsa('.section-btn').forEach(b=>b.classList.remove('active'));
+      qsa('.dropdown').forEach(d=>d.style.display='none');
+      if(!expanded && dd && dd.classList.contains('dropdown')){
+        dd.style.display='block'; btn.classList.add('active');
+      }
+    }
+    function toggleNestedDropdown(btn){
+      const block = btn.nextElementSibling;
+      const active = btn.classList.contains('active');
+      qsa('.nested-button').forEach(b=>b.classList.remove('active'));
+      qsa('.nested-dropdown').forEach(d=>d.style.display='none');
+      if(!active && block && block.classList.contains('nested-dropdown')){
+        btn.classList.add('active'); block.style.display='block';
+      }
+    }
 
-        // Current Time Display
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            document.getElementById('current-time').textContent = `Current Time: ${timeString}`;
-        }
-        setInterval(updateTime, 1000);
+    // Time label
+    function updateTime(){
+      const now = new Date();
+      const s = now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      const el = qs('#current-time');
+      if(el) el.textContent = "What’s the time on Muttaki’s Clock — " + s;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Loading Animation
-            const loading = document.getElementById('loading');
-            loading.style.opacity = '0';
-            setTimeout(() => {
-                loading.style.display = 'none';
-            }, 500);
+    // Cursor
+    document.addEventListener('mousemove',(e)=>{
+      const c = qs('#custom-cursor'); if(!c) return;
+      c.style.left = e.pageX + 'px';
+      c.style.top  = e.pageY + 'px';
+    }, {passive:true});
 
-            // Dark Mode
-            if (localStorage.getItem('darkMode') === 'true') {
-                document.body.classList.add('dark-mode');
-            }
+    // Typewriter: concise, CV-aligned summary
+    const text = "Engineer & researcher shipping deployable ML for UAV forestry, WiFi sensing (BFI/CSI), and embedded devices. Oak Wilt 98.68% (SwinV2-Tiny) & HWA 97.37%; sign language up to 99.85%. Stack: MATLAB, PyTorch/timm; Web: FastAPI/Flask/Vue/Streamlit; GIS: Sentinel-1/2 + GEE; testing & CI.";
+    let i=0;
+    function typeWriter(){
+      const el = qs('#typewriter'); if(!el) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = text; return; }
+      if (i<text.length){ el.textContent += text.charAt(i++); setTimeout(typeWriter, 16); }
+    }
 
-            // Profile Views Counter
-            const counterElement = document.getElementById('profile-views');
-            const count = localStorage.getItem('profileViews') || 0;
-            const newCount = parseInt(count, 10) + 1 * 7;
-            localStorage.setItem('profileViews', newCount);
-            counterElement.textContent = newCount;
+    // Loading + popups
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const loading = qs('#loading');
+      if(loading){ loading.style.opacity='0'; setTimeout(()=>loading.style.display='none', 450); }
+      typeWriter();
+      setTimeout(()=>{ const p = qs('#popup1'); if(p) p.style.display='block'; }, 12000);
+      setTimeout(()=>{ const p = qs('#popup2'); if(p) p.style.display='block'; }, 24000);
+    });
 
-            // Typewriter Effect
-            typeWriter();
-
-            // Show Popups
-            setTimeout(() => {
-                document.getElementById('popup1').style.display = 'block';
-            }, 15000); // 15 seconds
-
-            setTimeout(() => {
-                document.getElementById('popup2').style.display = 'block';
-            }, 30000); // 30 seconds
-        });
-    </script>
+    function closePopup(id){
+      const el = qs('#'+id);
+      if(el) el.style.display='none';
+    }
+  </script>
 </body>
 </html>
