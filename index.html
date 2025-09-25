@@ -184,6 +184,34 @@
 
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
     a{ text-underline-offset: 2px; }
+    /* Photography gallery */
+    .gallery-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+    }
+    @media (max-width: 1100px){ .gallery-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 640px){ .gallery-grid{ grid-template-columns: 1fr; } }
+
+    .gallery-item{
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    }
+    .gallery-item img{
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    }
+    .gallery-item figcaption{
+    padding: 8px 10px;
+    font-size: .9rem;
+    color: var(--muted);
+    }
   </style>
 </head>
 <body>
@@ -481,6 +509,62 @@
         <a href="https://drive.google.com/drive/folders/1eMYyYl33q2nrrlSxWw4ZQYHFmROA8HsA?usp=sharing" target="_blank" rel="noopener">Download CV</a>
       </p>
     </div>
+
+
+    <!-- Photography (hobby) -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Photography</button>
+    <div class="dropdown" role="region" aria-label="Photography">
+    <p>Muttaki loves photography—street, nature, and candid moments. Here are a few placeholders (swap with real images later).</p>
+
+    <div class="gallery-grid">
+        <!-- Replace src filenames with your real images; keep the same structure -->
+        <figure class="gallery-item">
+        <img src="Hunting Eyes.jpg" alt="Placeholder: street scene" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+        <img src="DSC01760.jpg" alt="Placeholder: night long exposure" loading="lazy">
+        </figure>
+
+        <figure class="gallery-item">
+        <img src="Uncertainty.jpeg" alt="Placeholder: forest trail" loading="lazy">
+        </figure>
+
+        <figure class="gallery-item">
+        <img src="Into the Nature.jpg" alt="Placeholder: city skyline at dusk" loading="lazy">
+        </figure>
+
+        <figure class="gallery-item">
+        <img src="One The Way to Nowhere.jpeg" alt="Placeholder: candid portrait" loading="lazy">
+        </figure>
+
+        <figure class="gallery-item">
+        <img src="Reflection of the Blue.jpeg" alt="Placeholder: macro leaf" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+        <img src="IMG_3303-01.jpeg" alt="Placeholder: night long exposure" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+        <img src="IMG_3308-01-01.jpeg" alt="Placeholder: night long exposure" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+        <img src="IMG_3309-01-01.jpeg" alt="Placeholder: night long exposure" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+        <img src="IMG_3320-01-01.jpeg" alt="Placeholder: night long exposure" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+        <img src="IMG_5079.jpg" alt="Placeholder: night long exposure" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+        <img src="IMG_5415.jpg" alt="Placeholder: night long exposure" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+        <img src="IMG_8953.jpg" alt="Placeholder: night long exposure" loading="lazy">
+        </figure>
+    </div>
+    </div>
+
+
     <!-- Time label update -->
     <div id="current-time" aria-live="polite">What’s the time on Muttaki’s Clock — …</div>
   </main>
