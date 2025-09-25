@@ -201,9 +201,14 @@
         <p class="hero-role">mbismoy@umich.edu | +1(616) 375-4002 | Detroit, MI, USA</p>
       </div>
     </div>
+    <!-- Who am I (typewriter) -->
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Who am I?</button>
+    <div class="dropdown" role="region" aria-label="Who am I details">
+      <p id="typewriter" class="mono" aria-live="polite"></p>
+    </div>
 
     <!-- Summary -->
-    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Summary</button>
+    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">My Expertise</button>
     <div class="dropdown" role="region" aria-label="Summary">
       <ul class="list-tight">
         <li>Machine Learning & Computer Vision engineer with <strong>4+ years</strong> of applied research building <strong>deployable AI</strong> systems across UAV forestry, embedded devices, and WiFi sensing.</li>
@@ -213,12 +218,6 @@
         <li>Tooling: <strong>MATLAB</strong>, <strong>PyTorch/Torchvision/Torchaudio</strong>, <strong>timm</strong>, OpenCV, Scikit-learn.</li>
         <li>Passionate about <strong>applied research</strong> bridging academia & industry via scalable, reproducible AI.</li>
       </ul>
-    </div>
-
-    <!-- Who am I (typewriter) -->
-    <button class="section-btn" onclick="toggleDropdown(this)" aria-expanded="false">Who am I?</button>
-    <div class="dropdown" role="region" aria-label="Who am I details">
-      <p id="typewriter" class="mono" aria-live="polite"></p>
     </div>
 
     <!-- Skills -->
